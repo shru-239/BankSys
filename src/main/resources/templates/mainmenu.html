@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Main Menu</title>
+<link rel="icon" href="/ff.png"  type="image/png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+  body {
+	  
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+  }
+  .backgrnd-img{
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background-image: url("/mainmenu.png") ;
+	  background-size: cover;
+	  background-position: center bottom;
+	  z-index: -1;
+  }
+  .backgrnd-button{
+	  position: absolute;
+	  top: 68.7%;
+	  left: 4%;
+	 transform:  translate (-50%,-50%);
+	 background-color: dodgerblue;
+	 color: white;
+	 padding: 10px 20px;
+	 border: none;
+	 border-radius: 10px;
+	 cursor: pointer;
+	 z-index: 2;
+	 height: 50px;
+	 width: 10%;
+	  
+  }
+
+  .strip{
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 45px;
+	  background-color: lightgrey;
+	  padding: 10px 20px;
+	  box-shadow: 0px 0px 0px rgba(0,0,0,0.3);
+	  display: flex;
+	  justify-content: space-between;
+      align-items: center ;
+	  z-index: 1;
+  }
+  .menu-icon{
+	  position: absolute;
+	  left: 20px;
+	  top: 20px;
+	  cursor: pointer;
+	  font-size: 24px;
+	  color: #333; 
+	  
+	 
+  }
+  .menu-list{
+	  position: absolute;
+	  left: 0px;
+	  top: 60px;
+	  background-color: white;
+	  border: 1px solid #333;
+	  box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+	  display: none;
+	  width: 150px;
+  }
+  .menu-icon.active + .menu-list{
+	  display: block;
+  }
+  .menu-list ul{
+	  list-style: none;
+	  padding: 0;
+	  margin: 0;
+	  width: 150px;
+  }
+  .menu-list li{
+	  padding: 10px 20px;
+	  border-bottom: 1px solid #333;
+	  transition: background-color 0.3s;
+	  cursor: pointer;
+  }
+  .menu-list li :last-child{
+	  border-bottom: none;
+  }
+  .menu-icon:hover{
+	  color: cornflowerblue;
+	 
+  }
+  .sub-menu{
+	  display: none;
+	  margin-left: 15px;
+  }
+  .menu-list li:hover .sub-menu{
+	  display: block;
+  }
+  .sub-menu li {
+	  padding: 5px 0;
+  }
+  .about-us-container {
+    position: absolute;
+    left: 100%;
+    top: 45px; 
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    padding: 10px;
+    width: 200px; 
+    z-index: 1000;
+    display: none;
+    
+}
+
+.language-sub-menu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: white;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    padding: 10px;
+    width: 150px; 
+    z-index: 1000;
+}
+  
+  .logo img{
+	  width:70px;
+	  height: 70px;
+	  border-radius: 40%;
+	  margin-left: 80px;
+  }
+	.flash-messages{
+		position: relative;
+		top: 0px;
+		left: 30%;
+		width: 25%;
+		height: 20px;
+		color: #fff;
+		text-align: center;
+		 padding: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		 z-index: 9999;
+	}
+	.flash-messages.success1{
+		background-color: #2ecc71;
+	}
+	
+ .menu{
+	 margin-left: auto;
+ }
+
+  .menu a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 30px;
+    font-size: 12px;
+   transition:  color 0.3s ,text-decoration 0.3s;
+    
+  }
+  .menu a:hover{
+	  color: cornflowerblue;
+	  text-decoration:  underline;
+  }
+  
+  @media screen and (max-width : 810px){
+	  .menu a{
+		  font-size: 10px;
+		  margin-right: 17px;
+		  font-weight: bold;
+		  margin-left: auto;
+	  }
+	  .logo img{
+		  margin-left: 0px;
+	  }
+  }
+  .confirmation-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+
+  .confirmation-dialog h3 {
+    margin-top: 0;
+  }
+
+  .confirmation-dialog-buttons {
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  .confirmation-dialog-buttons button {
+    padding: 5px 10px;
+    margin-left: 10px;
+  }
+  
+  
+  .account-management-submenu{
+	  position: absolute;
+     left: 49%;
+      top: 100%;
+    background-color: white;
+    border: 1px solid #333;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    width: 200px; 
+    display: none;
+    z-index: 1000;
+    padding: 0;
+    margin-top: 0px;
+  }
+  .account-management-link:hover + .account-management-submenu{
+	  display: block;
+  }
+  .account-management-submenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-management-submenu li {
+
+    border-bottom: 1px solid #333;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    padding: 2px 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.account-management-submenu li:last-child {
+    border-bottom: none;
+}
+  .account-management-link::after {
+    content: '\f078'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: 2px;
+    transition: transform 0.3s;
+    display: inline-block;
+    transform-origin: center;
+}
+  .account-management-link.active {
+    text-decoration: underline;
+    color: cornflowerblue; 
+}
+
+.account-management-link:hover::after {
+    transform: rotate(180deg);
+}
+
+
+.transaction-process-submenu{
+	  position: absolute;
+     left: 63%;
+      top: 100%;
+    background-color: white;
+    border: 1px solid #333;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    width: 200px; 
+    display: none;
+    z-index: 1000;
+    padding: 0;
+    margin-top: 0px;
+  }
+  .transaction-process-link:hover + .transaction-process-submenu{
+	  display: block;
+  }
+  .transaction-process-submenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transaction-process-submenu li {
+
+    border-bottom: 1px solid #333;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    padding: 2px 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.transaction-process-submenu li:last-child {
+    border-bottom: none;
+}
+  .transaction-process-link::after {
+    content: '\f078'; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: 2px;
+    transition: transform 0.3s;
+    display: inline-block;
+    transform-origin: center;
+}
+  .transaction-process-link.active {
+    text-decoration: underline;
+    color: cornflowerblue; 
+}
+
+.transaction-process-link:hover::after {
+    transform: rotate(180deg);
+}
+
+  .form-container{
+	  padding: 10px;
+	  background-color:white;
+	  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+	 /*  width: 40%;
+	  height: 50%; */
+	  display: none;
+	  position: fixed;
+	  top: 50%;
+	  left: 50%;
+	  margin: 10px auto;
+	  transform: translate(-50%,-50%);
+	  background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+     
+        
+  }
+  .form-container form{
+	  text-align: left ;
+	  padding: 20px;
+	/*  margin-left: 40px; */
+   }
+         
+     .form-container h3{
+		margin-top: 0;
+	 }
+	 
+	 .button-contain{
+		display:  flex;
+		flex: wrap;
+	   justify-content: space-evenly;
+	   align-items: center;
+		 margin-top: 10px;
+	
+	}
+	.button
+	{
+		background-color:royalblue;
+		color: black;
+		border: none;
+		border-radius: 50px;
+		padding: 10px 20px;
+		cursor: pointer;
+		transition: background-color 0.3s;
+        width: auto;
+		text-align: center;
+		margin: 5px;
+		
+	}
+	button:hover{
+		background-color: #e0e0e0;
+	}  
+	
+	.form-container form input{
+		display: block;
+		width: 100%;
+	/*	max-width: 230px; */
+		margin-bottom: 5px;
+		padding: 5px ;
+		border: 1px solid #ccc;
+		border-radius:50px;
+		font-size: 12px;
+		
+	}
+	.form-container form label {
+    float: left;
+    clear: left;
+     display: block;
+    margin-right: 10px;
+    font-weight: bold;
+}
+.transaction-history {
+	position: relative;
+    text-align: center;
+    margin: 0 auto;
+    top: 50px;
+    width: 50%; 
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* Style the table */
+.transaction-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.transaction-table th, .transaction-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.transaction-table th {
+    background-color: #f2f2f2;
+}
+
+/* Style the table header */
+.transaction-table th {
+    background-color: #f2f2f2;
+}
+
+/* Style table rows (alternating background color) */
+.transaction-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+	
+	  
+</style>
+</head>
+<body>
+	
+	<div class="backgrnd-img">
+		<button class="backgrnd-button"> Read More > </button>
+	</div>
+	         
+
+  <div class="strip">
+	  <div class="menu-icon">
+        <i class="fas fa-bars"></i>
+    </div>
+      <div class="logo">
+		  <img src="logoF2.jpg" alt="online banking logo">
+	  </div>
+	   
+     
+       
+      <div class="menu">
+		<a href="#" class ="account-management-link">ACCOUNT MANAGEMENT</a>
+		<div class="sub-menu account-management-submenu">
+			<ul>
+			<li><a href="#" class ="create-account-link">Create new bank account</a></li>
+			 <li><a href="#" class ="view-account-link">View account details</a></li>
+			<li> <a href="#" class ="update-account-link">Update account details</a></li>
+			</ul>
+		</div>
+		<a href="#" class="transaction-process-link">TRANSACTION PROCESS</a>
+		<div class="sub-menu transaction-process-submenu">
+			<ul>
+			 <li><a href="#" class ="transfer-link">Transfer Money</a></li>
+			<li> <a href="#" class ="transfer-history-link">View transaction history</a></li>
+			</ul>
+		</div>
+		<a href="#" class="interest-calculation-link">INTEREST CALCULATION</a>
+		<a href="#" class="report-link">REPORTS</a>
+		
+    </div>
+     </div>
+<div class="menu-list">
+    <ul>
+        <li class="menu-icon active"></li>
+        <li><a href="#" class="settings-link">Settings</a>
+            <ul class="sub-menu language-sub-menu">
+               <li><a href="#">Language 1</a></li>
+               <li><a href="#">Language 2</a></li>
+            </ul>
+            
+        </li>
+        <li><a href="#" class="about-us-link">About Us</a>
+        <ul class="sub-menu about-us-container">
+          <li>
+            <p>Welcome to our online banking platform. We are dedicated to providing you with the best banking experience...</p>
+          </li>
+        </ul>
+        </li>
+        <li><a href="#" class="logout-button" >Logout</a></li>
+    </ul>
+</div>
+            
+
+<div class="confirmation-dialog" id ="logoutConfirmation">
+	<p>Are you sure you want to logout</p>
+	<div class="confirmation-dialog-buttons">
+		<button id="logoutConfirm">Yes</button>
+		<button id="logoutCancle">Cancle</button>
+	</div>
+</div>
+
+<div class="form-container create-account-form">
+	<h2>Create New Bank Account</h2>
+	<form id="createAccountform">
+		<label for="name">Account Holder Name:</label>
+		<input type="text" id="name" name="name" required><br>
+		
+		<label for="accType">Account Type:</label>
+		<select id="accType" name="accType" required>
+			<option value="Savings">Savings</option>
+			<option value="Checking">Checking</option>
+		</select><br>
+		
+		<br><label for="aadharNo">Aadhar Number:</label>
+	      <input type="text" id="aadharNo" name="aadharNo" required><br>
+	      
+	     <label for="dob">Date of Birth (yyyy/MM/dd):</label>
+        <input type="text" id="dob" name="dob" required><br>
+        
+        <label for="initialDeposit">Initial Deposit Amount:</label>
+        <input type="number" id="initialDeposit" name="initialDeposit" required><br>
+        
+        <div class="button-contain">
+        <button type="submit">Create Account</button>	
+        <button type="button"  class="cancle-button">Cancle</button>
+        </div>
+        
+	</form>
+</div> 
+
+<div class="form-container view-account-form">
+	<h2>View Account Details</h2>
+	<form id="viewAccountform">
+		<label for="accno">Enter valid account number:</label><br>
+		<input type="text" id="accno" name="accno" required>
+		
+		<div class="button-contain">
+        <button type="submit">Show</button>	
+        <button type="button" class="cancle-button">Cancle</button>
+        </div>
+	</form>
+</div> 
+<div id="accountDetails" class="form-container">
+	<h2>Account Details</h2>
+     <p><strong>Account Number:</strong> <span id="accNo"></span></p>
+    <p><strong>Account Holder Name:</strong> <span id="accHolder"></span></p>
+    <p><strong>Account Type:</strong> <span id="acctype"></span></p>
+    <p><strong>Aadhar Number:</strong> <span id="aadharNumber"></span></p>
+    <p><strong>Date of birth:</strong> <span id="Dob"></span></p>
+    <p><strong>Balance:</strong> <span id="balance"></span></p>
+    <div class="button-contain">
+		<button type="button" class="cancle-button">Close</button>
+	</div>
+</div>
+
+<div class="form-container update-account-form">
+	<h2>Update Account Details</h2>
+	<form id="updateAccountform">
+		<label for="accnum">Enter valid account number:</label><br>
+		<input type="text" id="accnum" name="accnum" required>
+		
+		<div class="button-contain">
+        <button type="submit">submit</button>	
+        <button type="button" class="cancle-button">Close</button>
+        </div>
+		
+	</form>
+</div> 
+<div id="updateFormContainer" class="form-container " style="display: none;">
+
+	<h2>Update Account Information</h2>
+	<form  id="hiddenUpdateForm">
+		<label for="newName">New Name</label>
+		<input type="text" id="newName" name="newName" required>
+		
+		<label for="newAccType">New Account Type:</label><br>
+        <input type="text" id="newAccType" name="newAccType" required>
+        
+        <label for="newDob">New Date of Birth:</label><br>
+        <input type="date" id="newDob" name="newDob" required>
+        <div class="button-contain">
+            <button type="submit">Apply</button>
+            <button type="button"  class="cancle-button" >Close</button>
+        </div>
+	</form>
+</div>
+
+<div class="form-container Transfer-form" th:fragment="Transfer-form">
+	<h2>Transfer money</h2>
+	<form id="transferMoneyform">
+		<label for="senderAccount">Enter your account number:</label>
+		<input type="text" id="senderAccount" name="senderAccount" required>
+		
+		<label for="receiverAccount">Reciever's account number:</label>
+		<input type="text" id="receiverAccount" name="receiverAccount" required>
+		
+		<div class="button-contain">
+			<button type="submit">submit</button>
+			<button type="button" class="cancle-button">Cancle</button>
+		</div>
+		</form>
+</div>
+<div id="transferFormContainer" class ="form-container" style="display: none";>
+	<h2>Transfer money</h2>
+	<form id="MoneyTransferForm">
+		<label for="transferAmount">Enter Amount to Transfer:</label><br>
+		<input type="number" id="transferAmount" name="transferAmount" required>
+		<div class="button-contain">
+            <button type="submit">transfer</button>
+            <button type="button"  class="cancle-button" >Cancle</button>
+        </div>
+	</form>
+</div>
+
+<div id ="balanceRemain" style="display: none";>
+	<p>Transaction Successful!</p>
+    <p>New balance of your account: <span id="newSenderBalance"></span></p>
+</div>
+     
+
+<div class="form-container transfer-history-form">
+	<h2>Transaction history</h2>
+	<form id="historyForm">
+		<label for ="accNo" >Enter Your Account Number</label>
+		<input type="text" id="accNo" name="accNo" required>
+		<div class="button-contain">
+			<button type="submit">submit</button>
+			<button type="button" class="cancle-button">Cancle</button>
+		</div>
+ 		
+	</form>
+</div>
+
+<div id="transactionhistory" class="transaction-history" style="display: none;">
+	<h2>Transaction History</h2>
+	<table id="transactionTable" class="transaction-table" style="display: none;">
+		 <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Sender Account</th>
+                <th>Receiver Account</th>
+                <th>Transfer Type</th>
+                <th>Transfer Amount</th>
+                <th>Transaction Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Transaction rows will be inserted here dynamically using JavaScript -->
+        </tbody>
+    </table>
+    
+</div>
+<div class="form-container interest-calculation-form">
+	<h2>Interest calculation</h2>
+	<form id="interestCalcForm">
+	<label for="Accnum">Enter your Account number</label>
+	<input type="text" id="Accnum" name="Accnum" required>
+	<div class="button-contain">
+			<button type="submit">submit</button>
+			<button type="button" class="cancle-button">Cancle</button>
+	</div>
+	</form>
+	 <div id="interestResult" style="display: none;">
+        <h3>Interest Calculation Result</h3>
+        <p id="interestAmount"></p>
+        <p id="newBalance"></p>
+    </div>
+</div>
+
+ <div class="form-container reports-generation-form">
+    <h2>Generate Report</h2>
+    <form id="reportsForm">
+        <label for="accnum">Enter your Account number</label>
+        <input type="text" id="accnum" name="accnum" required>
+        <div class="button-contain">
+            <button type="submit">Generate Report</button>
+            <button type="button" class="cancle-button">Cancel</button>
+        </div>
+    </form>
+  </div> 
+    <div id="reportContainer" class="transaction-history" style = "display: none;">
+        <h3>Transaction Report</h3>
+        <table id="reportTable" class="transaction-table" style="display: none;">
+            <thead>
+                <tr>
+					 <th>Transaction ID</th>
+                    <th>Sender Account</th>
+                    <th>Receiver Account</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Transaction Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Transaction rows will be inserted here dynamically using JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+
+
+    
+      <div 
+         th:if="${success}" class="flash-messages success1" >
+            <p th:text="${success}"></p>
+         </div>
+         <script th:if="${success}">
+			 setTimeout(function(){
+				 document.querySelectorAll('.flash-messages').forEach(function(message){
+					 message.style.display='none';
+				 });
+			 },2000);
+		</script>
+		
+			<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuIcon = document.querySelector('.menu-icon');
+      const menuList = document.querySelector('.menu-list');
+        const aboutUsLink = document.querySelector('.about-us-link');
+      const aboutUsContainer = document.querySelector('.about-us-container');
+      const settingsLink = document.querySelector('.settings-link');
+      const languageSubMenu = document.querySelector('.language-sub-menu');
+      
+      const accountManagementLink = document.querySelector('.account-management-link');
+      const accountSubMenu = document.querySelector('.account-management-submenu');
+      
+        const transactionProcessLink = document.querySelector('.transaction-process-link');
+      const transactionSubMenu = document.querySelector('.transaction-process-submenu');
+      
+      
+      
+       
+            menuIcon.addEventListener('click', () => {
+        menuList.style.display = menuList.style.display === 'block' ? 'none' : 'block';
+        aboutUsContainer.style.display = 'none';
+        languageSubMenu.style.display = 'none';
+    });
+
+    aboutUsLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        aboutUsContainer.style.display = 'block';
+        languageSubMenu.style.display = 'none';
+       
+    });
+
+    settingsLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        languageSubMenu.style.display = 'block';
+        aboutUsContainer.style.display = 'none';
+       
+    });
+    
+    
+    
+     accountManagementLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        accountSubMenu.style.display = accountSubMenu.style.display === 'block' ? 'none' : 'block';
+         accountManagementLink.classList.toggle('active');
+    });
+    
+    transactionProcessLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        transactionSubMenu.style.display = transactionSubMenu.style.display === 'block' ? 'none' : 'block';
+         transactionProcessLink.classList.toggle('active');
+    });
+    
+    
+  
+     document.addEventListener('click', (event) => {
+    if (
+        !menuIcon.contains(event.target) &&
+        !menuList.contains(event.target) &&
+        !aboutUsLink.contains(event.target) &&
+        !aboutUsContainer.contains(event.target) &&
+        
+        !accountManagementLink.contains(event.target) && 
+        !accountSubMenu.contains(event.target) &&
+        
+        !transactionProcessLink.contains(event.target) && 
+        !transactionSubMenu.contains(event.target) ) 
+           
+        
+     {
+        menuList.style.display = 'none';
+        aboutUsContainer.style.display = 'none';
+        languageSubMenu.style.display = 'none';
+        
+         accountSubMenu.style.display = 'none';
+         transactionSubMenu.style.display='none';
+    }
+});
+          document.addEventListener('click',(event)=>{
+			  const transactionHistory= document.querySelector('.transaction-history');
+			  const transactionTable = document.getElementById('transactionTable');
+			 
+			  
+			  if(
+				  !transactionHistory.contains(event.target)&&
+				  event.target !==document.querySelector('.transaction-process-link')
+				 
+				  
+			  ){
+				  transactionTable.style.display='none';
+				  transactionHistory.style.display='none';
+				  
+				   
+				  
+			  }
+		  })
+          document.addEventListener('click',(event)=>{
+			   const reportContainer = document.getElementById('reportContainer');
+			  const reportTable = document.getElementById('reportTable');
+			  if(!reportContainer.contains(event.target)&&
+				  event.target !==document.querySelector('.report-link')
+				  ){
+					  reportTable.style.display='none';
+				   reportContainer.style.display='none';
+				  }
+			  })	  
+    });
+    
+  </script>
+     <script>
+			 const logoutButton = document.querySelector('.logout-button');
+			 const logoutConfirmation = document.getElementById('logoutConfirmation');
+			 const logoutConfirmButton=document.getElementById('logoutConfirm');
+			 const logoutCancleButton = document.getElementById('logoutCancle');
+			 
+			 
+			 logoutButton.addEventListener('click',()=>{
+				 logoutConfirmation.style.display='block';
+			 });
+			 
+			  logoutCancleButton.addEventListener('click', () => {
+                  logoutConfirmation.style.display = 'none';
+             }); 
+              logoutConfirmButton.addEventListener('click',()=>{
+		          window.location.href = '/'; 
+	         });
+	        
+		 </script>
+		 
+		 <script>
+			 // button clicks
+			 document.addEventListener('click',function(event){
+				 const target = event.target;
+				
+				 
+				 if(target.classList.contains('create-account-link')){
+					 showForm('.create-account-form');
+				 }
+				 else if(target.classList.contains('view-account-link')){
+					 showForm('.view-account-form');
+				 }else if(target.classList.contains('update-account-link')){
+					 showForm('.update-account-form');
+				 }
+				 else if(target.classList.contains('transfer-link')){
+					 showForm('.Transfer-form');
+				 }else if(target.classList.contains('transfer-history-link')){
+					 showForm('.transfer-history-form');
+				 }else if(target.classList.contains('interest-calculation-link')){
+					 showForm('.interest-calculation-form');
+				 }else if(target.classList.contains('report-link')){
+					 showForm('.reports-generation-form');
+				 }
+				 else if(target.classList.contains('cancle-button')){
+					 const formContainer = target.closest('.form-container');
+					 if(formContainer){
+						 formContainer.style.display='none';
+					 }
+				 }
+			 });
+			 //formshow		 
+	  function showForm(formSelector) {
+      const forms = document.querySelectorAll('.form-container');
+      
+      forms.forEach(function (form) {
+        form.style.display = 'none';
+      });
+      
+      const formToShow = document.querySelector(formSelector);
+      if (formToShow) {
+        formToShow.style.display = 'block';
+      }
+    }
+    
+   //  document.getElementById("closeForm").addEventListener("click",function(){
+	//				 var formContainer = document.querySelector(".create-account-form");
+		//			 var viewaccContainer = document.querySelector(".view-account-form");
+			//		 var accountdetails = document.querySelector(".accountDetails");
+				//	 var updateform = document.querySelector(".updateAccountForm");
+					 
+					// formContainer.style.display="none";
+				//	 viewaccContainer.style.display="none";
+			//		 accountdetails.style.display="none";
+				//	 updateform.style.display="none";
+				// });
+  </script>
+     <script>
+		 document.getElementById("createAccountform").addEventListener("submit",function(event){
+			 event.preventDefault();
+			 
+			 const formData= new FormData(event.target);
+			 
+			 fetch("/create-bank-account",{
+				 method:"POST",
+				 body:formData,
+			 })
+			 .then(response=>{
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+			 .then(data=>{
+            if (data.success) {
+                alert("Account created successfully");
+                window.location.href = '/mainmenu'; 
+            } else {
+                alert("Account creation failed: " + data.errorMessage); 
+            }
+	    })
+			 .catch(error=> {
+				 console.error("Error",error);
+				 alert("An error occourred while creating the account.");
+				 
+			 });
+		 });
+	 </script>
+	 <script>
+		 document.addEventListener("DOMContentLoaded",function(){
+		 document.getElementById("viewAccountform").addEventListener("submit",function(event){
+			 event.preventDefault();
+			 const formData= new FormData(event.target);
+			 fetch("/view-account-details",{
+				 method: "POST",
+				 body: formData ,
+			 })
+			 .then(response =>{
+				 if(!response.ok){
+					 throw new Error("Network response was not okay");
+				 }
+				 return response.json();
+			 })
+			 .then(data => {
+				 if(data.success){
+					                                         
+					  console.log(accType);
+					 document.getElementById("accNo").textContent = data.accNo; 
+					 document.getElementById("accHolder").textContent = data.accHolder;
+                     document.getElementById("acctype").textContent = data.acctype;
+                     document.getElementById("aadharNumber").textContent = data.aadharNo;
+                     document.getElementById("Dob").textContent = data.Dob;
+                     document.getElementById("balance").textContent = data.balance;
+					 
+					 const accountDetailsContainer = document.getElementById("accountDetails");
+					 accountDetailsContainer.style.display="block";
+				 }
+				 else{
+					 alert(data.errorMessage);
+				 }
+				 
+			 })
+			 .catch(error =>{
+				 console.error("Error",error);
+				 alert("An error occurred while fetching account details.");
+			 });
+		 });
+		 });
+	 </script>
+	 <script>
+		  document.addEventListener("DOMContentLoaded",function(){
+		 document.getElementById("updateAccountform").addEventListener("submit",function(event){
+			 event.preventDefault();
+        const formData = new FormData(event.target);
+        const accNum = formData.get("accnum");
+
+       // console.log("Form submitted");
+       // console.log("accNum:", accNum);
+        fetch("/validate-account-details", {
+            method: "POST",
+            body:formData,
+          
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response data:", data);
+                if (data.success) {
+                    document.getElementById("updateFormContainer").style.display = "block";
+                } else {
+                    alert("Account not found. Please enter a valid account number.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while checking the account number.");
+            });
+    });
+
+   
+    
+     document.getElementById("hiddenUpdateForm").addEventListener("submit",function(event){
+		 event.preventDefault();
+		 const accNum =document.getElementById("accnum").value;
+		 const newName = document.getElementById("newName").value;
+		 const newAccType = document.getElementById("newAccType").value;
+		 const newDob = document.getElementById("newDob").value;
+		 
+		 const formData = new FormData();
+		 formData.append("accnum",accNum);
+		 formData.append("newName",newName);
+		 formData.append("newAccType",newAccType);
+		 formData.append("newDob",newDob);
+		 
+		  fetch("/update-account-details", {
+        method: "POST",
+        body:  formData ,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert("Account details updated successfully");
+            document.getElementById("updateFormContainer").style.display = "none";
+        } else {
+            alert("Account details update failed: " + data.errorMessage);
+        }
+    })
+    .catch(error => {
+        console.error("Error", error);
+        alert("An error occurred while updating account details.");
+    });
+  });
+
+	 }); 
+	 </script>
+	 
+	  <script>
+		  document.addEventListener("DOMContentLoaded",function(){
+			  const transferMoneyform= document.getElementById("transferMoneyform");
+			  transferMoneyform.addEventListener("submit",function(event){
+				   event.preventDefault();
+				    const formData = new FormData(event.target);
+		   const senderAccount = formData.get("senderAccount")
+           const receiverAccount = formData.get("receiverAccount");
+
+        fetch("/validate-account-number", {
+            method: "POST",
+            body:formData,
+          
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Response data:", data);
+                if (data.success) {
+                    document.getElementById("transferFormContainer").style.display = "block";
+                } else {
+                    alert("sender or receiver's account number is not found.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while checking the account number.");
+            });
+    });
+    
+         document.getElementById("MoneyTransferForm").addEventListener("submit",function(event){
+		 event.preventDefault();
+		 const formData = new FormData(event.target); 
+		const amount = document.getElementById("transferAmount").value;
+		 
+		formData.append("transferAmount",amount)
+		 
+		  fetch("/transfer-money", {
+        method: "POST",
+        body:  formData , 
+    })
+    .then(response => response.json())
+        .then(data => {
+            console.log("Transfer response data:", data);
+            if (data.success) {
+                    alert("Money credited successful! remaining balance of your account: " + data.newSenderBalance)
+                       }
+           else {
+                alert("Money transfer failed: " + data.errorMessage);
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred during the money transfer.");
+        });
+});
+    });
+    </script>
+    <script>
+	document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("historyForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const accNo = formData.get("accNo");
+
+        fetch("/validate-account-no", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("History response data:", data);
+            if (data.success) {
+                fetch(`/transactions?accNo=${accNo}`, {
+                    method: "POST",
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("History response data:", data);
+                    if (data.success) {
+						
+                        const jsonData = data.transactions;
+                        const transactionTable = document.getElementById("transactionTable");
+                        const transactionhistory= document.getElementById("transactionhistory");
+                        const tbody = transactionTable.querySelector("tbody");
+                        tbody.innerHTML = "";
+                        for (const transaction of jsonData) {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                                    <td>${transaction.transId}</td>
+                                    <td>${transaction.sAccNo}</td>
+                                    <td>${transaction.rAccNo}</td>
+                                    <td>${transaction.transType}</td>
+                                    <td>${transaction.transAmount}</td>
+                                    <td>${transaction.tranDate}</td>
+                            `;
+                            console.log("table");
+                            tbody.appendChild(row); 
+                        }
+                        transactionhistory.style.display="block";
+                        transactionTable.style.display="block"; 
+                        console.log("table");
+                    } else {
+                        alert("No transactions found for this account.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while fetching the transactions.");
+                });
+            } else {
+                alert("Account number is not found.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred while checking the account number.");
+        });
+    });
+});
+	</script>
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("interestCalcForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const Accnum = formData.get("Accnum");
+
+        fetch("/validate-account-num", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("interest response data:", data);
+            if (data.success) {
+				  fetch('/calculate-interest', {
+            method: 'POST',
+            body: JSON.stringify({ Accnum }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                interestAmount.textContent = `Interest calculated: Rs ${data.interest.toFixed(2)}`;
+                newBalance.textContent = `New Balance: Rs ${data.newBalance.toFixed(2)}`;
+                interestResult.style.display = 'block';
+            } 
+            else {
+                        alert("please try again later.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("An error occurred while fetching the balance.");
+                });
+            
+          }  else {
+                alert('Invalid account number');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while calculating interest.');
+        });
+    });
+});
+	
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+		 document.getElementById("reportsForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const accnum = formData.get("accnum");
+
+        fetch("/validate-account-No", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Reports response data:", data);
+            if (data.success) {
+                fetch('/generate-report', {
+            method: 'POST',
+            body: JSON.stringify({ accnum }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const reportTable = document.getElementById('reportTable');
+                const reportContainer = document.getElementById('reportContainer');
+                const tbody = reportTable.querySelector('tbody');
+                tbody.innerHTML = '';
+
+                data.transactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${transaction.transId}</td>
+                        <td>${transaction.sAccNo}</td>
+                        <td>${transaction.rAccNo}</td>
+                        <td>${transaction.transType}</td>
+                        <td>${transaction.transAmount}</td>
+                        <td>${transaction.tranDate}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                
+                reportContainer.style.display = 'block';
+                reportTable.style.display="block"; 
+            } else {
+                alert('No data found for the specified account number.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while fetching the report.');
+        });
+        }
+        else {
+                alert('Invalid account number.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while chekcing  the account number.');
+        });
+        
+      });
+});
+
+ 
+	</script>
+</body>
+</html>
